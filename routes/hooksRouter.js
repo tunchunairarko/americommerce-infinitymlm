@@ -16,6 +16,9 @@ router.post("/customer/new", async (req, res) => {
             eventTo: "MLM"
         }
         const newHookEvent = new HookEvents(sdata)
+        const savedEvent = await newHookEvent.save();
+        console.log(savedEvent)
+        res.json(savedEvent)
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
