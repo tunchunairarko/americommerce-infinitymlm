@@ -8,6 +8,7 @@ const axios = require('axios');
 router.post("/customer/new", async (req, res) => {
     try {
         const { data } = req.body;
+        console.log(data)
         var sdata={
             eventType:"customer",
             eventEnum: "success",
