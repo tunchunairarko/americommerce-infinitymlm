@@ -7,14 +7,14 @@ const axios = require('axios');
 
 router.post("/customer/new", async (req, res) => {
     try {
-        const { data } = req.body;
-        console.log(req)
-        console.log(data)
+        const {customer}  = req.body;
+        // console.log(req)
+        console.log(customer)
         var sdata={
             eventType:"customer",
             eventEnum: "success",
             eventFrom: "Americommerce",
-            eventData: data,
+            eventData: customer,
             eventTo: "MLM"
         }
         const newHookEvent = new HookEvents(sdata)

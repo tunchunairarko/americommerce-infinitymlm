@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
     eventType: {type: String},
     eventFrom: {type: String},
     eventEnum: {type: String}, //Success/update/error
-    eventData: {type: String},
+    eventData: {type: Object},
     eventTo: {type: String}
 },{ timestamps: true });
 
