@@ -1,0 +1,74 @@
+{
+  "name": "americommerce-infinitemlm-front",
+  "proxy": "http://127.0.0.1:7000",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^24.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "add": "^2.0.6",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.3",
+    "bootstrap-switch-button-react": "^1.2.0",
+    "node-sass": "^4.14.1",
+    "npm-watch": "^0.7.0",
+    "quagga": "^0.12.1",
+    "react": "^17.0.1",
+    "react-alert": "^7.0.2",
+    "react-alert-template-basic": "^1.0.0",
+    "react-bootstrap": "^1.4.0",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^17.0.1",
+    "react-event-timeline": "^1.6.3",
+    "react-hooks-lib": "^0.4.0",
+    "react-html5-camera-photo": "^1.5.4",
+    "react-icons": "^4.1.0",
+    "react-images-uploading": "^3.1.2",
+    "react-loader-spinner": "^3.1.14",
+    "react-pro-sidebar": "^0.5.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "use-file-upload": "^1.0.9",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

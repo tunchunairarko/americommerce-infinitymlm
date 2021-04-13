@@ -1,0 +1,212 @@
+.login-form{
+    max-width: 570px!important;
+}
+.register-form{
+    max-width: 600px!important;
+}
+
+.force-100{
+    min-width:100%;
+}
+.force-80{
+    min-width:80%;
+}
+.box-design{
+    border-top :0.2em solid #16a085!important;
+}
+
+#content-body{
+    background-color: rgba(236, 240, 241,0.67);
+}
+.col-form-label{
+    font-size: 0.875em!important;
+}
+@media (min-width: 481px) and (max-width: 1280px) {
+  
+    .qtyButton{
+        padding-left:0.3em!important;
+        padding-right:0.3em!important;
+    }
+    
+  }
+
+@media (max-width: 480px){
+    .qtyButton{
+        margin-top: 10px;
+        
+    }
+    .searchModalTitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
+     }
+}
+#qtyButtonGroup{
+    width:100%!important;
+}
+
+.moduleTitle{
+    text-transform: uppercase;
+}
+
+h1{
+    font-family: 'Karla', sans-serif;
+}
+body{
+    font-family: 'Quicksand', sans-serif!important;
+}
+.searchModalTable{
+    font-size: 1em;
+}
+.react-bootstrap-table table {
+    table-layout: auto;
+  }
+.searchModalTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }
+ 
+
+ @media (min-width: 481px){
+    .searchModalImage{
+        max-width: 50%!important;
+    }
+ }
+ .productImageBox{
+    width:18rem;
+    border:none!important;
+ }
+
+ @media (min-width: 481px) and (max-width: 1280px) {
+
+    .productImageBox{
+        width:12rem;
+     }
+    
+  }
+  @media (max-width: 480px){
+    .productImageBox{
+        width:100%;
+     }
+ }
+
+ .error-notice{
+    background-color: rgba(192, 57, 43,0.3);
+    margin: 10px 0px 10px 0px;
+    padding: 7px;
+    border-radius: 2px;
+ }
+ .error-close-button{
+    float: right;
+    background-color: rgba(192, 57, 43,0);
+    border: none;
+    font-weight: 400;
+    font-size: small;
+ }
+
+ .success-notice{
+    background-color:rgba(39, 174, 96,0.4);
+    margin: 10px 0px 10px 0px;
+    padding: 7px;
+    border-radius: 2px;
+ }
+ .success-close-button{
+    float: right;
+    background-color: rgba(39, 174, 96,0);
+    border: none;
+    font-weight: 400;
+    font-size: small;
+ }
+ /* .searchLoader:after{
+    content:"Please wait"
+ } */
+
+ .navText{
+     padding: 0px 10px 0px 10px;
+ }
+
+.card-stats{
+    padding: 10px 10px 0px!important;
+}
+.dashboard-card-footer{
+    background-color:rgba(255,255,255)!important;
+}
+@media (min-width: 1281px){
+    .dashboard-card-title{
+        color:#7f8c8d;
+    }
+    .dashboard-card-subtitle{
+        font-size:0.75em!important;
+    }
+    .dashboard-card-title{
+        font-size:0.85em!important;
+    }
+    .dashboard-card-img{
+        max-width: 60%!important;;
+    }
+}
+@media (min-width: 319px) and (max-width: 1280px) {
+    .dashboard-card-title{
+        font-size:0.85em!important;
+    }
+    .dashboard-card-subtitle{
+        font-size:0.75em!important;
+    }
+    .dashboard-card-img{
+        max-width: 90%!important;;
+    }
+    .dashboard-card-footer{
+        padding-right:10px!important;
+        padding-left:10px!important;
+    }
+  }
+.moduleHeader{
+    margin-top:15px;
+    margin-bottom:15px;
+} 
+.productImageHolder{
+    object-fit: cover;
+    height: 286px;
+}
+
+.photo-input-button::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  .photo-input-button::before {
+    content: 'Select some files';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    --webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  .photo-input-button:hover::before {
+    border-color: black;
+  }
+  .photo-input-button:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+  }
+  .hidden{
+      display: none;
+  }
+  .imageTakerLabel{
+      text-align: center;
+      width: 100%;
+      background-color: #130f40;
+      color:#fff;
+      padding:.375rem .75rem;
+      border:1px solid transparent;
+      border-radius:.25rem;
+  }
