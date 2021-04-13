@@ -9,7 +9,7 @@ router.post("/customer/new", async (req, res) => {
     try {
         const {customer}  = req.body;
         // console.log(req)
-        console.log(customer)
+        // console.log(customer)
         var sdata={
             eventType:"customer",
             eventEnum: "success",
