@@ -69,14 +69,14 @@ router.post("/customer/fail", async (req, res) => {
 
 router.post("/payment/new", async (req, res) => {
   try {
-    const { customer } = req.body;
+    const { order_payment } = req.body;
     // console.log(req)
     // console.log(customer)
     var sdata = {
-      eventType: "customer",
+      eventType: "payment",
       eventEnum: "success",
       eventFrom: "Americommerce",
-      eventData: customer,
+      eventData: order_payment,
       eventTo: "MLM"
     }
     const newHookEvent = new HookEvents(sdata)
