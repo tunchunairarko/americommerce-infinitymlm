@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const helmet = require("helmet");
+const socketio = require("socket.io")
 // const rateLimit = require("express-rate-limit");
 // set up express
 
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 app.use("/api/products", require("./routes/productRouter"));
 app.use("/api/users", require("./routes/userRouter"));
 app.use("/api/hookspublisher/", require("./routes/hooksRouter"));
+app.use("/api/settings", require("./routes/SettingsRouter"));
 
 app.get("*", function (req, res) {
   res.sendFile('index.html', { root });
@@ -57,7 +59,17 @@ app.get("*", function (req, res) {
 
 app.use(helmet());
 
-app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
+const server= app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
+const io = socketio(server,{pingTimeout: 0, origins: '*:*'})
+
+io.on("connection",(socket)=>{
+  socket.on("backenddata",function(latestUpdates){
+    socket.broadcast.emit("frombackend",latestUpdates)
+  })      
+})
+
+
+
 
 
 

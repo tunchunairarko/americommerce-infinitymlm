@@ -4,6 +4,15 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const HookEvents = require("../models/hooksModel");
 const axios = require('axios');
+const socketIOClient= require("socket.io-client")
+const socket = socketIOClient();
+
+
+const getLatestEvents = async(username) =>{
+  const filter = { username: req.query.username }
+  const hookevents = await HookEvents.find(filter).limit(10)
+  return hookevents
+}
 
 router.post("/customer/new", async (req, res) => {
   try {
@@ -19,7 +28,9 @@ router.post("/customer/new", async (req, res) => {
     }
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
+    const curEvents=getLatestEvents(username)
+    socket.emit("backenddata", curEvents)
+    console.log(curEvents)    
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -70,6 +81,7 @@ router.post("/customer/fail", async (req, res) => {
 router.post("/payment/new", async (req, res) => {
   try {
     const { order_payment } = req.body;
+    const mlmresp = await axios.post("https://demo3.infinitemlmdemo.com/webhook/",req.body)
     // console.log(req)
     // console.log(customer)
     var sdata = {
@@ -87,5 +99,12 @@ router.post("/payment/new", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+router.get("/events", auth, async (req, res) => {
+  const filter = { username: req.query.username }
+  const curEvents = await HookEvents.find(filter).limit(10)
+  // console.log(curEvents)
+  res.json({
+    curEvents
+  });
+});
 module.exports = router;

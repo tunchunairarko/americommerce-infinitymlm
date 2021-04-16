@@ -6,6 +6,7 @@ import {  FaBars } from 'react-icons/fa';
 import '../../assets/Dashboard.scss';
 import PostingModule from '../PostingModule/postingModule';
 import Dashboard from '../Dashboard/dashboard';
+import ApiSettings from "../../settings/ApiSettings"
 import { Switch } from "react-router";
 
 export default function Admin() {
@@ -35,6 +36,7 @@ export default function Admin() {
                             <Switch>
                                 <PrivateRoute component={PostingModule} path="/posting"  />
                                 <PrivateRoute component={Dashboard} path="/dashboard" />
+                                <PrivateRoute component={ApiSettings} path="/settings" />
                             </Switch>
                         </div>
                     </main>

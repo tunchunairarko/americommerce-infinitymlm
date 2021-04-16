@@ -17,8 +17,7 @@ import { useFileUpload } from "use-file-upload";
 export default function DownloadedProductData({ title, upc, description, retail, image, setTitle, setRetail, setUpc, setDescription, setImage }) {
     const { userData } = useContext(UserContext);
     const [cookies] = useCookies(["user"]);
-    const [error, setError] = useState();
-    const [successNotice, setSuccessNotice] = useState();
+    
     const [quantity, setQuantity] = useState(1);
     const [discount, setDiscount] = useState(50);
     const [condition, setCondition] = useState('New');
@@ -26,6 +25,8 @@ export default function DownloadedProductData({ title, upc, description, retail,
     // const [cameraState, setCameraState] = useState(false);
 
     const alert = useAlert()
+    const [error, setError] = useState();
+    const [successNotice, setSuccessNotice] = useState();
 
     const handleSelect = (e) => {
         console.log(e);

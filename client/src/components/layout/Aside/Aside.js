@@ -69,7 +69,7 @@ const Aside = ({ collapsed, toggled, handleToggleSidebar }) => {
 
             <MenuItem
               icon={<FaGem />}>
-              <Link className="nav-link" to={`/setting`}>
+              <Link className="nav-link" to={`/settings`}>
                 API Setting
               </Link>
             </MenuItem>
