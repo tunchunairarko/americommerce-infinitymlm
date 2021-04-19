@@ -87,6 +87,7 @@ router.post("/customer/upsert", async (req, res) => {
     
     res.json(resp.data)
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: err.message });
   }
 });
