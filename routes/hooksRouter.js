@@ -5,8 +5,20 @@ const auth = require("../middleware/auth");
 const HookEvents = require("../models/hooksModel");
 const axios = require('axios');
 const socketIOClient= require("socket.io-client")
+const axiosRetry = require('axios-retry');
 const socket = socketIOClient();
 
+axiosRetry(axios, {
+  retries: 5, // number of retries
+  retryDelay: (retryCount) => {
+    console.log(`retry attempt: ${retryCount}`);
+    return retryCount * 2000; // time interval between retries
+  },
+  retryCondition: (error) => {
+    // if retry condition is not specified, by default idempotent requests are retried
+    return error.response.status === 503;
+  },
+});
 
 const getLatestEvents = async(username) =>{
   const filter = { username: req.query.username }
@@ -63,6 +75,7 @@ router.post("/customer/upsert", async (req, res) => {
     // console.log(req)
     console.log(req.body)
     const headers = { headers: {"X-AC-Auth-Token":process.env.AMCOM_API, "Content-type":"application/json"} }
+    console.log(headers)
     const posturl = "https://fashionsociety.americommerce.com/api/v1/customers"
     const data = req.body
     const resp = await axios.post(
