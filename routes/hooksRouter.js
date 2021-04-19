@@ -9,9 +9,9 @@ const axiosRetry = require('axios-retry');
 const socket = socketIOClient();
 
 axiosRetry(axios, {
-  retries: 5, // number of retries
+  retries: 10, // number of retries
   retryDelay: (retryCount) => {
-    console.log(`retry attempt: ${retryCount}`);
+    // console.log(`retry attempt: ${retryCount}`);
     return retryCount * 2000; // time interval between retries
   },
   retryCondition: (error) => {
@@ -77,7 +77,16 @@ router.post("/customer/upsert", async (req, res) => {
     const headers = { headers: {"X-AC-Auth-Token":process.env.AMCOM_API, "Content-type":"application/json"} }
     console.log(headers)
     const posturl = "https://fashionsociety.americommerce.com/api/v1/customers"
-    const data = req.body
+    const data ={
+      
+        email: req.body.email,
+        store_id: req.body.store_id,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        username: req.body.username,
+        password: req.body.password
+      
+    } 
     const resp = await axios.post(
       posturl,
       data,
