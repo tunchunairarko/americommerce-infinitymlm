@@ -56,6 +56,19 @@ router.post("/customer/update", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.post("/customer/upsert", async (req, res) => {
+  try {
+    const { customer } = req.body;
+    // console.log(req)
+    console.log(req.body)
+    
+    res.json(req.body)
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post("/customer/fail", async (req, res) => {
   try {
     const { customer } = req.body;
