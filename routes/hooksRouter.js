@@ -62,7 +62,7 @@ router.post("/customer/upsert", async (req, res) => {
     const { customer } = req.body;
     // console.log(req)
     console.log(req.body)
-    const headers = { headers: {"X-AC-Auth-Token":process.env.AMCOM_API, "Content-type":"application/json"}, timeout: 10 }
+    const headers = { headers: {"X-AC-Auth-Token":process.env.AMCOM_API, "Content-type":"application/json"} }
     const posturl = "https://fashionsociety.americommerce.com/api/v1/customers"
     const data = req.body
     const resp = await axios.post(
