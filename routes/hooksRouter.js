@@ -93,7 +93,16 @@ router.post("/customer/upsert", async (req, res) => {
       headers
     )
     console.log(resp)
-    
+    var sdata = {
+      eventType: "customer",
+      eventEnum: "new/uodate",
+      eventFrom: "MLM",
+      eventData: customer,
+      eventTo: "Americommerce"
+    }
+    const newHookEvent = new HookEvents(sdata)
+    const savedEvent = await newHookEvent.save();
+    console.log(savedEvent)
     res.json(resp.data)
   } catch (err) {
     console.log(err)
@@ -123,6 +132,27 @@ router.post("/customer/fail", async (req, res) => {
   }
 });
 
+router.post("/orders/approved", async (req, res) => {
+  try {
+    const { order } = req.body;
+    const mlmresp = await axios.post("https://demo3.infinitemlmdemo.com/webhook/",req.body)
+    // console.log(req)
+    // console.log(customer)
+    var sdata = {
+      eventType: "order",
+      eventEnum: "success",
+      eventFrom: "Americommerce",
+      eventData: order,
+      eventTo: "MLM"
+    }
+    const newHookEvent = new HookEvents(sdata)
+    const savedEvent = await newHookEvent.save();
+    console.log(savedEvent)
+    res.json(savedEvent)
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 router.post("/payment/new", async (req, res) => {
   try {
     const { order_payment } = req.body;
@@ -153,3 +183,4 @@ router.get("/events", auth, async (req, res) => {
   });
 });
 module.exports = router;
+
