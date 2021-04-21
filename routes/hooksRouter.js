@@ -26,28 +26,28 @@ const getLatestEvents = async(username) =>{
   return hookevents
 }
 
-router.post("/customer/new", async (req, res) => {
-  try {
-    const { customer } = req.body;
-    // console.log(req)
-    // console.log(customer)
-    var sdata = {
-      eventType: "customer",
-      eventEnum: "success",
-      eventFrom: "Americommerce",
-      eventData: customer,
-      eventTo: "MLM"
-    }
-    const newHookEvent = new HookEvents(sdata)
-    const savedEvent = await newHookEvent.save();
-    const curEvents=getLatestEvents(username)
-    socket.emit("backenddata", curEvents)
-    console.log(curEvents)    
-    res.json(savedEvent)
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// router.post("/customer/new", async (req, res) => {
+//   try {
+//     const { customer } = req.body;
+//     // console.log(req)
+//     // console.log(customer)
+//     var sdata = {
+//       eventType: "customer",
+//       eventEnum: "success",
+//       eventFrom: "Americommerce",
+//       eventData: customer,
+//       eventTo: "MLM"
+//     }
+//     const newHookEvent = new HookEvents(sdata)
+//     const savedEvent = await newHookEvent.save();
+//     const curEvents=getLatestEvents(username)
+//     socket.emit("backenddata", curEvents)
+//     console.log(curEvents)    
+//     res.json(savedEvent)
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 router.post("/customer/update", async (req, res) => {
   try {
     const { customer } = req.body;
