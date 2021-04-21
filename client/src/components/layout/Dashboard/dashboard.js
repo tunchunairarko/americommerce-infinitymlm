@@ -75,8 +75,9 @@ export default function Dashboard() {
                     try{
                         const apiData = await Axios.get(
                             "/api/hookspublisher/events",
-                            { headers: { "x-auth-token": token },params: { username: username } }
+                            { headers: { "x-auth-token": token } }
                         )
+                        console.log(apiData.data.curEvents)
                         setCurEvents(apiData.data.curEvents)
                     }catch(error){
                         console.log(error)

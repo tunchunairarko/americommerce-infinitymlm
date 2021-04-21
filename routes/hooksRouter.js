@@ -20,34 +20,34 @@ axiosRetry(axios, {
   },
 });
 
-const getLatestEvents = async(username) =>{
-  const filter = { username: req.query.username }
-  const hookevents = await HookEvents.find(filter).limit(10)
+const getLatestEvents = async() =>{
+  
+  const hookevents = await HookEvents.find().limit(10)
   return hookevents
 }
 
-// router.post("/customer/new", async (req, res) => {
-//   try {
-//     const { customer } = req.body;
-//     // console.log(req)
-//     // console.log(customer)
-//     var sdata = {
-//       eventType: "customer",
-//       eventEnum: "success",
-//       eventFrom: "Americommerce",
-//       eventData: customer,
-//       eventTo: "MLM"
-//     }
-//     const newHookEvent = new HookEvents(sdata)
-//     const savedEvent = await newHookEvent.save();
-//     const curEvents=getLatestEvents(username)
-//     socket.emit("backenddata", curEvents)
-//     console.log(curEvents)    
-//     res.json(savedEvent)
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+router.post("/customer/new", async (req, res) => {
+  try {
+    const { customer } = req.body;
+    // console.log(req)
+    // console.log(customer)
+    var sdata = {
+      eventType: "customer",
+      eventEnum: "success",
+      eventFrom: "Americommerce",
+      eventData: customer,
+      eventTo: "MLM"
+    }
+    const newHookEvent = new HookEvents(sdata)
+    const savedEvent = await newHookEvent.save();
+    const curEvents=getLatestEvents()
+    socket.emit("backenddata", curEvents)
+    console.log(curEvents)    
+    res.json(savedEvent)
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 router.post("/customer/update", async (req, res) => {
   try {
     const { customer } = req.body;
@@ -135,7 +135,7 @@ router.post("/customer/fail", async (req, res) => {
 router.post("/orders/approved", async (req, res) => {
   try {
     const { order } = req.body;
-    const mlmresp = await axios.post("https://demo3.infinitemlmdemo.com/webhook/",req.body)
+    const mlmresp = await axios.post("http://demo3.infinitemlmdemo.com/ebony/backoffice/api/order/",req.body)
     // console.log(req)
     // console.log(customer)
     var sdata = {
@@ -175,8 +175,7 @@ router.post("/payment/new", async (req, res) => {
   }
 });
 router.get("/events", auth, async (req, res) => {
-  const filter = { username: req.query.username }
-  const curEvents = await HookEvents.find(filter).limit(10)
+  const curEvents = await HookEvents.find().limit(10)
   // console.log(curEvents)
   res.json({
     curEvents
