@@ -135,7 +135,7 @@ router.post("/customer/fail", async (req, res) => {
 router.post("/orders/approved", async (req, res) => {
   try {
     const { order } = req.body;
-    const mlmresp = await axios.post("http://demo3.infinitemlmdemo.com/ebony/backoffice/api/order/",req.body)
+    const mlmresp = await axios.post("http://demo3.infinitemlmdemo.com/ebony/backoffice/register/store_call_back",req.body)
     // console.log(req)
     // console.log(customer)
     var sdata = {
