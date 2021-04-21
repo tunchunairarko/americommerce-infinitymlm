@@ -44,16 +44,20 @@ export default function ApiSettings() {
             // console.log(searchQuery)
 
             if (tokenResponse.data) {
-                const username = cookies.username
-                const apiData = await Axios.get(
-                    "/api/settings/",
-                    { headers: { "x-auth-token": token },params: { username: username } }
-                )
-                console.log(apiData.data)
-                if (apiData.data) {
-                    setAmcomApi(apiData.data.settings.amcomApi)
-                    setMlmWebHook(apiData.data.settings.mlmWebHook)
-                    setActiveState(apiData.data.settings.activeState)
+                try {
+                    const username = cookies.username
+                    const apiData = await Axios.get(
+                        "/api/settings/",
+                        { headers: { "x-auth-token": token }, params: { username: username } }
+                    )
+                    console.log(apiData.data)
+                    if (apiData.data) {
+                        setAmcomApi(apiData.data.settings.amcomApi)
+                        setMlmWebHook(apiData.data.settings.mlmWebHook)
+                        setActiveState(apiData.data.settings.activeState)
+                    }
+                }catch(err){
+                    setError("Error updating settings")
                 }
                 // const body = { username };
                 // const dashboardRes = await Axios.post(
@@ -140,7 +144,7 @@ export default function ApiSettings() {
                                         defaultValue={activeState}
                                         value={activeState}
                                         data={["Active", "Stopped"]}
-                                        onChange = {(value)=>handleActiveState(value)}
+                                        onChange={(value) => handleActiveState(value)}
                                     />
                                     {/* <Form.Control type="text" value={activeState} onChange={(e) => handleActiveState(e.target.value)} /> */}
                                 </Col>

@@ -4,9 +4,10 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const HookEvents = require("../models/hooksModel");
 const axios = require('axios');
-const socketIOClient= require("socket.io-client")
+
 const axiosRetry = require('axios-retry');
-const socket = socketIOClient();
+
+
 
 axiosRetry(axios, {
   retries: 10, // number of retries
@@ -22,11 +23,12 @@ axiosRetry(axios, {
 
 const getLatestEvents = async() =>{
   
-  const hookevents = await HookEvents.find().limit(10)
+  const hookevents = await HookEvents.find().sort({ _id: -1 }).limit(10)
   return hookevents
 }
 
 router.post("/customer/new", async (req, res) => {
+  const io = req.app.get("socketio")
   try {
     const { customer } = req.body;
     // console.log(req)
@@ -40,9 +42,13 @@ router.post("/customer/new", async (req, res) => {
     }
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
-    const curEvents=getLatestEvents()
-    socket.emit("backenddata", curEvents)
-    console.log(curEvents)    
+    const curEvents= await getLatestEvents()
+    io.on("connection", (socket) => {
+      // console.log(curEvents)
+      socket.broadcast.emit("frombackend", curEvents)
+    })
+    // io.emit("frombackend", curEvents)
+    // console.log(curEvents)    
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -97,12 +103,13 @@ router.post("/customer/upsert", async (req, res) => {
       eventType: "customer",
       eventEnum: "new/uodate",
       eventFrom: "MLM",
-      eventData: customer,
+      eventData: req.body,
       eventTo: "Americommerce"
     }
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
+    const curEvents=await getLatestEvents()
+    socket.emit("backenddata", curEvents)
     res.json(resp.data)
   } catch (err) {
     console.log(err)
@@ -147,7 +154,8 @@ router.post("/orders/approved", async (req, res) => {
     }
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
+    const curEvents= await getLatestEvents()
+    socket.emit("backenddata", curEvents)
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -168,18 +176,19 @@ router.post("/payment/new", async (req, res) => {
     }
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
+    const curEvents=await getLatestEvents()
+    socket.emit("backenddata", curEvents)
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 router.get("/events", auth, async (req, res) => {
-  const curEvents = await HookEvents.find().limit(10)
+  const curEvents = await HookEvents.find().sort({ _id: -1 }).limit(10)
   // console.log(curEvents)
   res.json({
     curEvents
   });
 });
-module.exports = router;
 
+module.exports=router

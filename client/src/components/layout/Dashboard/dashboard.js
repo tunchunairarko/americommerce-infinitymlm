@@ -22,10 +22,11 @@ export default function Dashboard() {
     const alert = useAlert()
     const [error, setError] = useState();
     const [successNotice, setSuccessNotice] = useState();
-    const [curEvents,setCurEvents]=useState([]) //starting e ekbar query kore update nibe, er por theke socket handle korbe
+    const [curEvents,setCurEvents]=useState([{}]) //starting e ekbar query kore update nibe, er por theke socket handle korbe
 
     
     socket.on("frombackend", data => {
+        console.log("received")
         setCurEvents(data);
     });
 
@@ -77,7 +78,7 @@ export default function Dashboard() {
                             "/api/hookspublisher/events",
                             { headers: { "x-auth-token": token } }
                         )
-                        console.log(apiData.data.curEvents)
+                        //console.log(apiData.data.curEvents)
                         setCurEvents(apiData.data.curEvents)
                     }catch(error){
                         console.log(error)
@@ -109,7 +110,9 @@ export default function Dashboard() {
 
             </CardDeck>
             <Row>
+                
                 <DataTimeline curEvents={curEvents}/>
+                
             </Row>
         </Fragment>
     )

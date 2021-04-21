@@ -41,8 +41,8 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   if (req.method === 'OPTIONS') {
-      res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
-      return res.status(200).json({});
+    res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
+    return res.status(200).json({});
   }
   next();
 });
@@ -59,18 +59,26 @@ app.get("*", function (req, res) {
 
 app.use(helmet());
 
-const server= app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
-const io = socketio(server,{pingTimeout: 0, origins: '*:*'})
-
-io.on("connection",(socket)=>{
-  socket.on("backenddata",function(latestUpdates){
-    socket.broadcast.emit("frombackend",latestUpdates)
-  })      
+const server = app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
+const io = socketio(server, {
+  pingTimeout: 0, origins: '*:*', handlePreflightRequest: (req, res) => {
+    const headers = {
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+      "Access-Control-Allow-Credentials": true
+    };
+    res.writeHead(200, headers);
+    res.end();
+  }
 })
 
+io.on("connection", (socket) => {
+  socket.on("backenddata", function (latestUpdates) {
+    console.log(latestUpdates)
+    socket.broadcast.emit("frombackend", latestUpdates)
+  })
+})
 
-
-
-
+app.set('socketio', io);
 
 
