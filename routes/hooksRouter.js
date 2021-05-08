@@ -142,7 +142,7 @@ router.post("/customer/fail", async (req, res) => {
 router.post("/orders/approved", async (req, res) => {
   try {
     const { order } = req.body;
-    const mlmresp = await axios.post("https://demo3.infinitemlmdemo.com/ebony/backoffice/register/store_call_back",req.body)
+    const mlmresp = await axios.post("https://myfashiondealersociety.com/backoffice/register/store_call_back",req.body)
     // console.log(req)
     // console.log(customer)
     var sdata = {
@@ -164,7 +164,7 @@ router.post("/orders/approved", async (req, res) => {
 router.post("/payment/new", async (req, res) => {
   try {
     const { order_payment } = req.body;
-    const mlmresp = await axios.post("https://demo3.infinitemlmdemo.com/webhook/",req.body)
+    const mlmresp = await axios.post("https://myfashiondealersociety.com/backoffice/register/store_call_back",req.body)
     // console.log(req)
     // console.log(customer)
     var sdata = {
