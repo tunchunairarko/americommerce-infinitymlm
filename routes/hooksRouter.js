@@ -44,7 +44,7 @@ router.post("/customer/new", async (req, res) => {
     const savedEvent = await newHookEvent.save();
     const curEvents= await getLatestEvents()
     io.on("connection", (socket) => {
-      // console.log(curEvents)
+      console.log(curEvents)
       socket.broadcast.emit("frombackend", curEvents)
     })
     // io.emit("frombackend", curEvents)
@@ -54,29 +54,30 @@ router.post("/customer/new", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-router.post("/customer/update", async (req, res) => {
-  try {
-    const { customer } = req.body;
-    // console.log(req)
-    // console.log(customer)
-    var sdata = {
-      eventType: "customer",
-      eventEnum: "update",
-      eventFrom: "Americommerce",
-      eventData: customer,
-      eventTo: "MLM"
-    }
-    const newHookEvent = new HookEvents(sdata)
-    const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
-    res.json(savedEvent)
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// router.post("/customer/update", async (req, res) => {
+//   try {
+//     const { customer } = req.body;
+//     // console.log(req)
+//     // console.log(customer)
+//     var sdata = {
+//       eventType: "customer",
+//       eventEnum: "update",
+//       eventFrom: "Americommerce",
+//       eventData: customer,
+//       eventTo: "MLM"
+//     }
+//     const newHookEvent = new HookEvents(sdata)
+//     const savedEvent = await newHookEvent.save();
+//     console.log(savedEvent)
+//     res.json(savedEvent)
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 router.post("/customer/upsert", async (req, res) => {
   try {
+    const io = req.app.get("socketio")
     const { customer } = req.body;
     // console.log(req)
     console.log(req.body)
@@ -109,7 +110,10 @@ router.post("/customer/upsert", async (req, res) => {
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
     const curEvents=await getLatestEvents()
-    socket.emit("backenddata", curEvents)
+    io.on("connection", (socket) => {
+      console.log(curEvents)
+      socket.broadcast.emit("frombackend", curEvents)
+    })
     res.json(resp.data)
   } catch (err) {
     console.log(err)
@@ -117,30 +121,31 @@ router.post("/customer/upsert", async (req, res) => {
   }
 });
 
-router.post("/customer/fail", async (req, res) => {
-  try {
-    const { customer } = req.body;
-    // console.log(req)
-    // console.log(customer)
-    var sdata = {
-      eventType: "customer",
-      eventEnum: "fail",
-      eventFrom: "Americommerce",
-      eventData: customer,
-      eventTo: "MLM"
-    }
-    const newHookEvent = new HookEvents(sdata)
-    const savedEvent = await newHookEvent.save();
-    console.log(savedEvent)
-    res.json(savedEvent)
+// router.post("/customer/fail", async (req, res) => {
+//   try {
+//     const { customer } = req.body;
+//     // console.log(req)
+//     // console.log(customer)
+//     var sdata = {
+//       eventType: "customer",
+//       eventEnum: "fail",
+//       eventFrom: "Americommerce",
+//       eventData: customer,
+//       eventTo: "MLM"
+//     }
+//     const newHookEvent = new HookEvents(sdata)
+//     const savedEvent = await newHookEvent.save();
+//     console.log(savedEvent)
+//     res.json(savedEvent)
 
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 router.post("/orders/approved", async (req, res) => {
   try {
+    const io = req.app.get("socketio")
     const { order } = req.body;
     const mlmresp = await axios.post("https://myfashiondealersociety.com/backoffice/register/store_call_back",req.body)
     // console.log(req)
@@ -155,7 +160,10 @@ router.post("/orders/approved", async (req, res) => {
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
     const curEvents= await getLatestEvents()
-    socket.emit("backenddata", curEvents)
+    io.on("connection", (socket) => {
+      console.log(curEvents)
+      socket.broadcast.emit("frombackend", curEvents)
+    })
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -163,6 +171,7 @@ router.post("/orders/approved", async (req, res) => {
 });
 router.post("/payment/new", async (req, res) => {
   try {
+    const io = req.app.get("socketio")
     const { order_payment } = req.body;
     const mlmresp = await axios.post("https://myfashiondealersociety.com/backoffice/register/store_call_back",req.body)
     // console.log(req)
@@ -177,7 +186,10 @@ router.post("/payment/new", async (req, res) => {
     const newHookEvent = new HookEvents(sdata)
     const savedEvent = await newHookEvent.save();
     const curEvents=await getLatestEvents()
-    socket.emit("backenddata", curEvents)
+    io.on("connection", (socket) => {
+      console.log(curEvents)
+      socket.broadcast.emit("frombackend", curEvents)
+    })
     res.json(savedEvent)
   } catch (err) {
     res.status(500).json({ error: err.message });
